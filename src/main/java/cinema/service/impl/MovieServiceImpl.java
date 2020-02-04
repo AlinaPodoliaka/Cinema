@@ -1,7 +1,6 @@
 package cinema.service.impl;
 
 import cinema.dao.MovieDao;
-import cinema.exceptions.DataProcessingException;
 import cinema.lib.Inject;
 import cinema.lib.Service;
 import cinema.model.Movie;
@@ -21,7 +20,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getAll() throws DataProcessingException {
+    public List<Movie> getAll() {
         return movieDao.getAll();
     }
 }
