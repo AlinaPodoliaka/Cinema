@@ -26,7 +26,7 @@ public class HashUtil {
                 hashedPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error(e);
+            LOGGER.error("Can't hash password",e);
         }
         return hashedPassword.toString();
     }
