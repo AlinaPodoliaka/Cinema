@@ -1,9 +1,12 @@
 package cinema;
 
+import cinema.exceptions.AuthenticationException;
 import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.User;
+import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
@@ -15,7 +18,7 @@ import java.time.LocalTime;
 public class Main {
     private static Injector injector = Injector.getInstance("cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
@@ -38,6 +41,10 @@ public class Main {
 
         movieSessionService.findAvailableSessions(movie.getId(), LocalDate.now())
                 .forEach(System.out::println);
-
+        AuthenticationService authenticationService = (AuthenticationService)
+                injector.getInstance(AuthenticationService.class);
+        authenticationService.register("1", "1");
+        User user = authenticationService.login("1", "1");
+        System.out.println(user.getEmail());
     }
 }
