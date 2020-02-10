@@ -10,14 +10,16 @@ import cinema.model.Ticket;
 import cinema.model.User;
 import cinema.service.ShoppingCartService;
 
+import java.util.Collections;
+
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Inject
-    private static ShoppingCartDao shoppingCartDao;
+    private ShoppingCartDao shoppingCartDao;
 
     @Inject
-    private static TicketDao ticketDao;
+    private TicketDao ticketDao;
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
@@ -43,5 +45,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         shoppingCartDao.add(shoppingCart);
+    }
+
+    @Override
+    public void clear(ShoppingCart shoppingCart) {
+        shoppingCart.setTickets(Collections.emptyList());
+        shoppingCartDao.update(shoppingCart);
     }
 }
