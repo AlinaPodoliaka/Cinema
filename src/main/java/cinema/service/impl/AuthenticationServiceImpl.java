@@ -12,7 +12,7 @@ import cinema.util.HashUtil;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
-    private static UserService userService;
+    private UserService userService;
 
     @Inject
     private ShoppingCartService shoppingCartService;

@@ -16,10 +16,10 @@ import java.util.Collections;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Inject
-    private static ShoppingCartDao shoppingCartDao;
+    private ShoppingCartDao shoppingCartDao;
 
     @Inject
-    private static TicketDao ticketDao;
+    private TicketDao ticketDao;
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
