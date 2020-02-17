@@ -1,20 +1,20 @@
 package cinema.service.impl;
 
 import cinema.exceptions.AuthenticationException;
-import cinema.lib.Inject;
-import cinema.lib.Service;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.util.HashUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
     private ShoppingCartService shoppingCartService;
 
     @Override
