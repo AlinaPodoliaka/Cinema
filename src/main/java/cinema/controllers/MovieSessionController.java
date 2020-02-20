@@ -36,19 +36,20 @@ public class MovieSessionController {
     }
 
     @GetMapping(value = "/available")
-    public List<MovieSessionResponseDto> getAll(
+    public List<MovieSessionResponseDto> getAvailable(
             @RequestParam Long movieId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
         return movieSessionService.findAvailableSessions(movieId, localDate).stream()
-                .map(movieSession -> getMovieSessionDto(movieSession))
+                .map(this::getMovieSessionDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping(value = "/add")
-    public MovieSession add(@RequestBody MovieSessionRequestDto
-                                    movieSessionRequestDto) {
-        return movieSessionService.add(
+    public String add(@RequestBody MovieSessionRequestDto
+                              movieSessionRequestDto) {
+        movieSessionService.add(
                 getMovieSessionFromDto(movieSessionRequestDto));
+        return "You successfully added movie session";
     }
 
     private MovieSessionResponseDto getMovieSessionDto(MovieSession movieSession) {

@@ -24,17 +24,18 @@ public class MovieController {
     }
 
     @PostMapping(value = "/add")
-    public Movie add(@RequestBody MovieRequestDto movieRequestDto) {
+    public String add(@RequestBody MovieRequestDto movieRequestDto) {
         Movie movie = new Movie();
         movie.setTitle(movieRequestDto.getTitle());
         movie.setDescription(movieRequestDto.getDescription());
-        return movieService.add(movie);
+        movieService.add(movie);
+        return "You successfully added movie";
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping
     public List<MovieResponseDto> getAllMovies() {
         return movieService.getAll().stream()
-                .map(movie -> getMovieDto(movie))
+                .map(this::getMovieDto)
                 .collect(Collectors.toList());
     }
 

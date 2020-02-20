@@ -24,17 +24,18 @@ public class CinemaHallController {
     }
 
     @PostMapping(value = "/add")
-    public CinemaHall add(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
+    public String add(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
         CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapacity(cinemaHall.getCapacity());
-        cinemaHall.setDescription(cinemaHall.getDescription());
-        return cinemaHallService.add(cinemaHall);
+        cinemaHall.setCapacity(cinemaHallRequestDto.getCapacity());
+        cinemaHall.setDescription(cinemaHallRequestDto.getDescription());
+        cinemaHallService.add(cinemaHall);
+        return "You successfully added cinema hall";
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping
     public List<CinemaHallResponseDto> getAllMovies() {
         return cinemaHallService.getAll().stream()
-                .map(cinemaHall -> getCinemaHallDto(cinemaHall))
+                .map(this::getCinemaHallDto)
                 .collect(Collectors.toList());
     }
 

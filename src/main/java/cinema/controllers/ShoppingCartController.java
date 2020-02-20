@@ -3,7 +3,6 @@ package cinema.controllers;
 import cinema.dto.MovieSessionRequestDto;
 import cinema.dto.TicketResponseDto;
 import cinema.model.MovieSession;
-import cinema.model.ShoppingCart;
 import cinema.model.Ticket;
 import cinema.model.User;
 import cinema.service.CinemaHallService;
@@ -41,7 +40,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping(value = "/addmoviesession")
-    public ShoppingCart addMovieSession(@RequestBody MovieSessionRequestDto movieSessionDto,
+    public String addMovieSession(@RequestBody MovieSessionRequestDto movieSessionDto,
                                         @RequestParam Long userId) {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.get(movieSessionDto.getMovieId()));
@@ -51,7 +50,8 @@ public class ShoppingCartController {
         movieSession.setShowTime(localDateTime);
         User user = userService.get(userId);
         shoppingCartService.addSession(movieSession, user);
-        return shoppingCartService.getByUser(user);
+        shoppingCartService.getByUser(user);
+        return "You successfully added movie session";
     }
 
     @GetMapping(value = "/byuser")

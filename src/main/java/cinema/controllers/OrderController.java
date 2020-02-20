@@ -1,9 +1,8 @@
 package cinema.controllers;
 
-import cinema.dto.ShoppingCartDto;
 import cinema.dto.TicketResponseDto;
+import cinema.dto.UserResponseDto;
 import cinema.model.Order;
-import cinema.model.ShoppingCart;
 import cinema.model.Ticket;
 import cinema.service.OrderService;
 import cinema.service.UserService;
@@ -21,24 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/orders")
 public class OrderController {
     private OrderService orderService;
+    private UserService userService;
 
     public OrderController(OrderService orderService, UserService userService) {
         this.orderService = orderService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/complete")
-    public Order completeOrder(@RequestBody ShoppingCartDto shoppingCartDto) {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(shoppingCartDto.getUser());
-        shoppingCart.setTickets(shoppingCartDto.getTickets());
-        return orderService.completeOrder(shoppingCart.getTickets(), shoppingCart.getUser());
+    public Order completeOrder(@RequestBody UserResponseDto userResponseDto) {
+        return orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping
     public List<TicketResponseDto> getAllOrders() {
         return orderService.getAll().stream()
                 .flatMap(order -> order.getTickets().stream())
-                .map(ticket -> getTicketsDto(ticket))
+                .map(this::getTicketsDto)
                 .collect(Collectors.toList());
     }
 
