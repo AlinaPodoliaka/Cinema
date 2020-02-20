@@ -1,7 +1,5 @@
 package cinema.config;
 
-import cinema.model.User;
-
 import java.util.Properties;
 import javax.sql.DataSource;
 
@@ -43,7 +41,7 @@ public class AppConfig {
                 environment.getProperty("hibernate.hbm2ddl.auto"));
 
         localSessionFactoryBean.setHibernateProperties(properties);
-        localSessionFactoryBean.setAnnotatedClasses(User.class);
+        localSessionFactoryBean.setPackagesToScan("cinema.model");
         return localSessionFactoryBean;
     }
 }

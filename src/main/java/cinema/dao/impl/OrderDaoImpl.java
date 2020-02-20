@@ -52,4 +52,16 @@ public class OrderDaoImpl implements OrderDao {
             throw new DataProcessingException("Can't get all orders for user", e);
         }
     }
+
+    @Override
+    public List<Order> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaQuery<Order> criteriaQuery = session.getCriteriaBuilder()
+                    .createQuery(Order.class);
+            criteriaQuery.from(Order.class);
+            return session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all orders", e);
+        }
+    }
 }
