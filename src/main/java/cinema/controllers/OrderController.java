@@ -28,8 +28,9 @@ public class OrderController {
     }
 
     @PostMapping(value = "/complete")
-    public Order completeOrder(@RequestBody UserResponseDto userResponseDto) {
-        return orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
+    public String completeOrder(@RequestBody UserResponseDto userResponseDto) {
+        orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
+        return "You successfully complete your order";
     }
 
     @GetMapping
