@@ -2,7 +2,6 @@ package cinema.controllers;
 
 import cinema.dto.TicketResponseDto;
 import cinema.dto.UserResponseDto;
-import cinema.model.Order;
 import cinema.model.Ticket;
 import cinema.service.OrderService;
 import cinema.service.UserService;
