@@ -2,6 +2,7 @@ package cinema.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,13 +26,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/register", "/hello").permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/cinemahalls", "/movies", "/moviesessions").hasRole("ADMIN")
+                .antMatchers("/orders/**",
+                        "/shoppingcarts/**").hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .permitAll()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .csrf().disable();;
     }
 
     @Bean
