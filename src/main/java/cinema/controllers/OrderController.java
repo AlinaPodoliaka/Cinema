@@ -1,7 +1,6 @@
 package cinema.controllers;
 
 import cinema.dto.TicketResponseDto;
-import cinema.dto.UserResponseDto;
 import cinema.model.Ticket;
 import cinema.service.OrderService;
 import cinema.service.UserService;
@@ -9,9 +8,9 @@ import cinema.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +26,8 @@ public class OrderController {
     }
 
     @PostMapping(value = "/complete")
-    public String completeOrder(@RequestBody UserResponseDto userResponseDto) {
-        orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
+    public String completeOrder(Authentication authentication) {
+        orderService.completeOrder(userService.findByEmail(authentication.getName()));
         return "You successfully complete your order";
     }
 

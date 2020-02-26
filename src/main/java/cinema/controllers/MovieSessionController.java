@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class MovieSessionController {
     }
 
     @PostMapping(value = "/add")
-    public String add(@RequestBody MovieSessionRequestDto
+    public String add(@RequestBody @Valid MovieSessionRequestDto
                               movieSessionRequestDto) {
         movieSessionService.add(
                 getMovieSessionFromDto(movieSessionRequestDto));

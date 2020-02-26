@@ -4,6 +4,9 @@ import cinema.dto.UserRequestDto;
 import cinema.dto.UserResponseDto;
 import cinema.model.User;
 import cinema.service.UserService;
+
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/add")
-    public String add(@RequestBody UserRequestDto userDto) {
+    public String add(@RequestBody @Valid UserRequestDto userDto) {
         User user = new User();
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());

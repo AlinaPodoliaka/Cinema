@@ -13,7 +13,9 @@ import cinema.service.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,15 +42,15 @@ public class ShoppingCartController {
     }
 
     @PostMapping(value = "/addmoviesession")
-    public String addMovieSession(@RequestBody MovieSessionRequestDto movieSessionDto,
-                                        @RequestParam Long userId) {
+    public String addMovieSession(@RequestBody @Valid MovieSessionRequestDto movieSessionDto,
+                                  Authentication authentication) {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.get(movieSessionDto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService
                 .get(movieSessionDto.getCinemaHallId()));
         LocalDateTime localDateTime = LocalDateTime.parse(movieSessionDto.getShowTime());
         movieSession.setShowTime(localDateTime);
-        User user = userService.get(userId);
+        User user = userService.findByEmail(authentication.getName());
         shoppingCartService.addSession(movieSession, user);
         shoppingCartService.getByUser(user);
         return "You successfully added movie session";
