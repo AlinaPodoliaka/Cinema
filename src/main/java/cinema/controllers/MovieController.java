@@ -7,6 +7,7 @@ import cinema.service.MovieService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class MovieController {
     }
 
     @PostMapping(value = "/add")
-    public String add(@RequestBody MovieRequestDto movieRequestDto) {
+    public String add(@RequestBody @Valid MovieRequestDto movieRequestDto) {
         Movie movie = new Movie();
         movie.setTitle(movieRequestDto.getTitle());
         movie.setDescription(movieRequestDto.getDescription());

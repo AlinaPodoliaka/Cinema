@@ -1,7 +1,9 @@
 package cinema.dto;
 
-public class MovieRequestDto {
+import javax.validation.constraints.NotNull;
 
+public class MovieRequestDto {
+    @NotNull
     private String title;
     private String description;
 

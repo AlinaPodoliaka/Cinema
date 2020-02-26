@@ -7,6 +7,7 @@ import cinema.service.CinemaHallService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class CinemaHallController {
     }
 
     @PostMapping(value = "/add")
-    public String add(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
+    public String add(@RequestBody @Valid CinemaHallRequestDto cinemaHallRequestDto) {
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(cinemaHallRequestDto.getCapacity());
         cinemaHall.setDescription(cinemaHallRequestDto.getDescription());

@@ -8,6 +8,7 @@ import cinema.service.UserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping(value = "/complete")
-    public String completeOrder(@RequestBody UserResponseDto userResponseDto) {
+    public String completeOrder(@RequestBody @Valid UserResponseDto userResponseDto) {
         orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
         return "You successfully complete your order";
     }
